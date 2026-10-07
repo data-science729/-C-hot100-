@@ -1,0 +1,23 @@
+# Compiled Executables & Binaries
+*.exe
+*.out
+*.app
+*.o
+*.obj
+
+# Debug & Build artifacts
+*.pdb
+*.ilk
+*.dSYM/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code & IDE settings (optional)
+.vscode/
+.idea/
+
+# Large binaries (Uncomment if you do not want to upload large PDF files)
+# *.pdf
