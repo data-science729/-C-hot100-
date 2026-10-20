@@ -24,3 +24,45 @@
  * 你可以在 O(1) 的额外空间复杂度内完成这个题目吗？
  * (出于对空间复杂度分析的目的，输出数组不被视为额外空间。)
  */
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> solve(vector<int>& nums)
+{
+     int n = nums.size();
+     //所有元素要初始化为1 因为1是乘法的单位元
+     vector<int> ans(n,1);
+     for(int i = 0;i<n;i++)     
+     {
+        for(int j = 0;j<n;j++)
+        {
+            if(j==i)  continue;
+            ans[i]*=nums[j];
+        }
+     }
+     return ans;
+    }
+ 
+
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n;
+    while(cin>>n)
+    {
+        vector<int> nums(n);
+        for(int i = 0;i<n;i++)
+        {
+            cin>>nums[i];
+        }
+        vector<int> ans(n);
+        ans = solve(nums);
+        for(int i = 0;i<n;i++)
+        {
+            cout<<ans[i]<<(i==n-1?'\n':' ');
+        }
+    }
+    return 0;
+}
