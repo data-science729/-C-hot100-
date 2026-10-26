@@ -129,7 +129,7 @@ bool DeleteHead_CList(ListNode*& tail)
     //如果q就是尾结点
     if(q == tail)
     {
-        tail == head; //这样head->next = head 变空表
+        tail = head; //这样head->next = head 变空表
     }
     delete q;
     return true;
