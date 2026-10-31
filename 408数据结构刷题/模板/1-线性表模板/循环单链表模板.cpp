@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+//尾结点的指针指向头结点
+//循环链表主要优点:从任一结点出发都可以遍历整个链表
 struct ListNode {
     int val;
     ListNode* next;
@@ -9,7 +10,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
 };
 
-//1.初始化
+//1.初始化 O(1)
 ListNode* InitCList()
 {
     ListNode* head = new ListNode();
@@ -17,13 +18,13 @@ ListNode* InitCList()
     return head;
 }
 
-//2.判空
+//2.判空 O(1)
 bool EmptyCList(ListNode* head)
 {
     return head->next == head;
 }
 
-//3.遍历
+//3.遍历 O(n)
 void PrintCList(ListNode* head)
 {
     ListNode* p = head->next;
@@ -58,7 +59,7 @@ bool InsertNextCNode(ListNode* p, int x)
 
 //5.在循环单链表的表头表尾插入新结点,O(1)
 
-//在表头插入新元素
+//在表头插入新元素 O(1)
 //链表为空时需要更新tail
 //原链表:head->A->B->.....->tail->head
 //插入后:head->s->A->B->....tail->head
@@ -96,7 +97,7 @@ bool InsertTail_CList(ListNode*& tail,int x)
 }
 
 
-//6.删除指定结点p的直接后继
+//6.删除指定结点p的直接后继 O(1)
 // p->q->r 变p->r  r写做p->next
 bool DeleteNextCNode(ListNode* p,ListNode* head)
 {

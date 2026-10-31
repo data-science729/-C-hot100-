@@ -10,7 +10,7 @@ struct DNode
     DNode(int x):val(x),prior(nullptr),next(nullptr) {}
 };
 
-//1.初始化
+//1.初始化 O(1)
 DNode* InitCDList()
 {
     DNode* head = new DNode();
@@ -19,14 +19,14 @@ DNode* InitCDList()
     return head;
 }
 
-//2.判空
+//2.判空 O(1)
 bool EmptyCDList(DNode* head)
 {
     //也可以写 head->prior == head, 一样
     return head->next == head;
 }
 
-//3(1).循环双链表指定结点后插
+//3(1).循环双链表指定结点后插 O(1)
 //与普通双链表核心区别:不需要判断p->next!=nullptr,能自动处理表尾插入
 //插入前:q ⇄ p ⇄ r  
 //在p后插入s:q ⇄ p ⇄ s ⇄ r
@@ -44,7 +44,7 @@ bool InsertNextDNode(DNode* p,int x)
     return true;
 }
 
-//3(2).循环双链表指定结点前插
+//3(2).循环双链表指定结点前插 O(1)
 //插入前:q ⇄ p ⇄ r  
 //在p前插入s:q<-->s<-->p<-->r
 bool InsertPriorCDNode(DNode* p,int x)
@@ -55,7 +55,7 @@ bool InsertPriorCDNode(DNode* p,int x)
 }
 
 
-//4(1).循环双链表删除指定结点p
+//4(1).循环双链表删除指定结点p O(1)
 //比普通双链表进步:p->prior->next = p->next后不用特判p->next!=nullptr
 //从而可以统一处理普通结点 首元结点和尾结点
 //q ⇄ p ⇄ r 变 q ⇄ r
@@ -70,7 +70,7 @@ bool DeleteCDNode(DNode* p ,DNode* head)
    return true;
 }
 
-//4(2).循环双链表删除指定结点p的直接后继
+//4(2).循环双链表删除指定结点p的直接后继 O(1)
 //p<-->q<-->r 变 p<-->r
 bool DeleteNextCDNode(DNode* p,DNode* head)
 {
@@ -84,7 +84,7 @@ bool DeleteNextCDNode(DNode* p,DNode* head)
 }
 
 
-//4(3).循环双链表删除指定结点P的直接前驱
+//4(3).循环双链表删除指定结点P的直接前驱 O(1)
 //之前要求p!=nullptr||p->prior!=nullptr||p->prior->prior!=nullptr
 //r<-->q<-->p 变 r<-->p
 bool DeletePriorCDNode(DNode* p,DNode* head)
@@ -97,4 +97,6 @@ bool DeletePriorCDNode(DNode* p,DNode* head)
     return true;
     //或者优雅复用 return DeletCDNode(p->prior,head)
 }
+
+
 

@@ -17,7 +17,7 @@ struct SNode
 SNode nodes[MaxSize];
 bool used[MaxSize]; //标记数组位置是否被占用
 
-//1.初始化静态链表
+//1.初始化静态链表 O(MaxSize)
 void InitSList()
 {
     //0号位置作为头结点
@@ -30,13 +30,13 @@ void InitSList()
     }
 }
 
-//2.判空
+//2.判空 O(1)
 bool EmptySList()
 {
     return nodes[0].next == -1;
 }
 
-//遍历静态链表
+//3.遍历静态链表 O(n)
 void PrintSList()
 {
     int p = nodes[0].next;

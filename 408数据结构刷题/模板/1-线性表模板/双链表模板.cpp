@@ -15,13 +15,13 @@ struct DNode
         : val(x), prior(p), next(n) {}
 };
 
-//1.双链表初始化
+//1.双链表初始化 O(1)
 DNode* InitDList()
 {
     return new DNode();
 }
 
-//2.判空
+//2.判空 O(1)
 bool Empty(DNode* head)
 {
     return head->next ==nullptr;

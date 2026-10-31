@@ -139,7 +139,7 @@ void DestroyList(ListNode* head)
 
 //====================进阶===================//
 //这是"复制数据"技巧 无法"保持物理结点身份"
-//11.头插法建立单链表:每读入一个元素 就把它插入头结点之后
+//11.头插法建立单链表 O(n):每读入一个元素 就把它插入头结点之后
 //如 10 20 30
 //变head->[dummy]->30->20->10->nullptr 会逆置输入顺序
 ListNode* List_HeadInsert(int n)
@@ -160,7 +160,7 @@ ListNode* List_HeadInsert(int n)
    return head;
 }
 
-//12.尾插法建立单链表:维护一个尾指针tail，使其始终指向链表的最后一个结点
+//12.尾插法建立单链表 O(n):维护一个尾指针tail，使其始终指向链表的最后一个结点
 //head->[dummy]->10->20->30->tail->nullptr
 ListNode* List_tailInsert(int n)
 {
@@ -237,3 +237,5 @@ bool DeleteNode(ListNode* p)
 }
 //注:13 和 15 操作的本质相同 都是通过复制数据 
 //绕开单链表无法直接访问前驱结点的问题
+
+
