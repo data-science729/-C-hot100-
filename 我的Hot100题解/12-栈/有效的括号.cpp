@@ -40,10 +40,48 @@ using namespace std;
 
 bool solve(const string s)
 {
-   
+   //1.创建一个字符栈
+   stack<char> st;
+   //2.遍历字符串中的每个字符
+   //写法:一次取出字符串s中的每个字符并赋值给变量c
+   //因此循环内部直接写c 不需要写c[i]
+   for(char c: s)
+   {
+       //3.如果是左括号 入栈
+       if(c == '(' || c == '[' || c == '{')
+       {
+        st.push(c);
+       }
+       //4.如果是右括号 检查栈是否为空 为空没法匹配直接false
+       else
+       {
+       //5.栈为空时无法匹配
+       if(st.empty())  return false;
+       //6.检查栈顶是否与当前右括号匹配
+       if(c == ')' && st.top() != '(') return false;
+       if(c == ']' && st.top() != '[') return false;
+       if(c == '}' && st.top() != '{') return false;
+       //7.匹配成功弹出栈顶
+       st.pop();
+       }
+   }
+   //8.最终栈为空才表示匹配成功
+   return st.empty();
 }
 
 int main()
 {
-   
+   string s;
+   while(cin>>s)
+   {
+    if(solve(s))
+    {
+        cout<<"true"<<'\n';
+    }
+    else
+    {
+        cout<<"false"<<'\n';
+    }
+   }
+   return 0;
 }
