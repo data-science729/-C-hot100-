@@ -32,3 +32,5 @@
  * 【数据范围】
  * 对于所有的数据:0 <= n <= 10^10000,1 <= m <= 50。
  */
+#include<bits/stdc++.h>
+using namespace std;

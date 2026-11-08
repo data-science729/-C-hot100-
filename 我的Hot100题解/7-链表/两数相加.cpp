@@ -22,13 +22,13 @@
  * 
  * 输入样例：
  * 3
- * 2 4 3
+ * 2 4 3  -->342
  * 3
- * 5 6 4
- * 
+ * 5 6 4  -->465
+ *    不需要额外逆序 因为输入本身已经是低位在前
  * 输出样例：
  * 3
- * 7 0 8
+ * 7 0 8  -->807
  */
 
 #include<bits/stdc++.h>
@@ -84,7 +84,29 @@ int getlength(ListNode* head)
 
 ListNode* addtwonumbers(ListNode* l1,ListNode* l2)
 {
-   
+   //1.创建虚拟头节点和尾指针
+   ListNode dummy(0);
+   ListNode* tail = &dummy;
+   //2.初始化进位
+   int carry = 0;
+   //3.遍历两个链表
+   while(l1 != nullptr || l2!=nullptr || carry)
+   {
+    //取出当前数位 不存在的数位按0处理
+    int x = (l1 != nullptr) ? l1->val : 0;
+    int y = (l2 != nullptr) ? l2->val : 0;
+    //核心加法
+    int t = x + y + carry;
+    carry = t / 10;
+    int digit = t % 10;
+    //创建节点并连接 尾插法标准写法 熟记
+    tail->next = new ListNode(digit);
+    tail = tail->next;
+    //指针链表后移
+    if(l1 != nullptr)  l1 = l1->next;
+    if(l2 != nullptr)  l2 = l2->next;
+   }
+   return dummy.next;
 }
 
 int main()
