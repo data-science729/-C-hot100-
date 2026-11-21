@@ -91,15 +91,72 @@ struct TreeNode {
  *    当前构造出的二叉树的根节点指针
  */
 
-//全局遍历序列
+//全局变量(多组数据时在main中resize/clear复用)
 vector<int> preorder,inorder;
 //哈希表:节点值->节点在中序序列中的下标
 unordered_map<int,int> position;
+
+//核心函数1:根据前序+中序构造二叉树
+//preL:当前子树在前序里从哪个下标开始
+//inL:当前子树在中序里从哪个下标开始
+//len:当前子树一共有多少个节点，只要算出左子树长度leftlen
+//右子树长度直接就是len-1-leftlen,下标位置顺着往后加
 TreeNode* buildTree(int preL,int inL,int len)
 {
-  
+    //1.递归出口:没有结点了 空子树返回空指针
+    if(len <= 0)  return nullptr;
+    //2.定根:前序区间的第1个元素是当前子树的根
+    int rootVal = preorder[preL]; //取出根的值
+    TreeNode* root = new TreeNode(rootVal);
+    
+    //3.找根:用哈希表O(1)查出根在中序里的下标
+    int rootIdx = position[rootVal];
+
+    //4.管长度:左子树节点个数 右子树节点个数
+    int leftLen = rootIdx - inL;
+    int rightLen = len - leftLen - 1;
+
+    //5.递归建左右
+    root->left = buildTree(preL +1,inL,leftLen);
+    root->right = buildTree(preL+1+leftLen,rootIdx+1,rightLen);
+    return root;
 }
 
+//核心函数2:层序遍历序列化并取出末尾连续null(树->字符串数组)
+vector<string> serialize(TreeNode* root)
+{
+    vector<string> res;
+    if(!root)  return res;
+    queue<TreeNode*> q;
+    q.push(root);
+    while(!q.empty())
+    {
+       TreeNode* cur = q.front();
+       q.pop();
+       //判断出队的cur是否为真实节点
+       if(cur != nullptr)
+       {
+        //是真实节点 用to_string将数字转为字符串计入答案
+        res.push_back(to_string(cur->val));
+        q.push(cur->left);
+        q.push(cur->right);
+       }
+       else
+       {
+        //空指针 计入"null"
+        res.push_back("null");
+       }
+     
+    }
+    //清理尾巴:叶子结点的左右nullptr也会进队 导致res末尾多出一堆连续的"null"
+    //处理方法:只要数组不空 且最后一个元素是"null" 就一直删掉(pop_back)
+    while(!res.empty() && res.back() == "null")
+    {
+        res.pop_back();
+    }
+    //返回整理好的序列化结果
+    return res;
+}
 
 int main()
 {
@@ -107,27 +164,32 @@ int main()
     cin.tie(nullptr);
     int n;
     while(cin>>n)
+   {
+    preorder.resize(n);
+    inorder.resize(n);
+    position.clear();
+    //1.输入前序遍历序列
+    for(int i = 0 ;i<n;i++)
     {
-        vector<int> preorder(n,0);
-        vector<int> inorder(n,0);
-        //输入前序遍历序列
-        for(int i = 0;i<n;i++)
-        {
-            cin>>preorder[i];
-        }
-        //输入中序遍历序列同时建立哈希表
-        unordered_map<int,int> position;
-        for(int i = 0;i<n;i++)
-        {
-            cin>>preorder[i];
-            position[preorder[i]] = i;
-        }
-        //调用buildTree()得到二叉树根节点
-        //调用serialize()得到序列化结果
-        //输出序列化结果的标记数量k
-        //循环输出序列化结果
-        
-
+        cin>>preorder[i];
     }
+    //2.输入中序遍历序列，同时建立值->下标映射
+    for(int i = 0;i<n;i++)
+    {
+        cin>>inorder[i];
+        position[inorder[i]] = i;
+    }
+    //3.建树+序列化
+    TreeNode* root = buildTree(0,0,n);
+    vector<string> ans = serialize(root);
+    //4.按格式输出
+    cout<<ans.size()<<'\n';
+    for(size_t i = 0;i<ans.size();i++)
+    {
+        if(i>0) cout<<' ';
+        cout<<ans[i];
+    }
+    cout<<'\n';
+   }
     return 0;
 }
